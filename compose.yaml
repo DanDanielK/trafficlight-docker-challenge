@@ -1,0 +1,55 @@
+version: '1.0'
+
+services:
+  red-app:
+    build: 
+      context: ./red
+      dockerfile: Dockerfile
+    container_name: red-app 
+    image: trafficlight/red:v1.0
+    networks:
+      - traffic-light
+  
+  green-app:
+    build: 
+      context: ./green
+      dockerfile: Dockerfile
+    container_name: green-app
+    image: trafficlight/green:v1.0
+    networks:
+      - traffic-light
+
+# comments to demenstrate my work
+  yellow-app: # container name
+    build: # build the image
+      context: ./yellow # path to the dockerfile
+      dockerfile: Dockerfile # name of the dockerfile
+    container_name: yellow-app # container name - avoid numbers 
+    image: trafficlight/yellow:v1.0 # name of the image
+    networks: # network to connect to
+      - traffic-light # network name (list)
+
+  nginx-proxy:
+    image: nginx:1.21  # pull the image
+    container_name: nginx-proxy
+    networks:
+      - traffic-light
+    volumes:
+      - ~/nginx/conf.d/:/etc/nginx/conf.d/  
+
+networks:
+  traffic-light:
+    name: traffic-light
+    driver: bridge # bridge network driver - default 
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
+          gateway: 172.20.0.1
+
+################################################################################
+# run the following command to build the images and run the containers:
+# docker compose up -d 
+#
+#
+# in the begginning i 
+################################################################################
