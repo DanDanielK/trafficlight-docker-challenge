@@ -51,5 +51,5 @@ networks:
 # docker compose up -d 
 #
 #
-# in the begginning i 
+# in the begginning i tried to do all the commend manually but i found it easier to # # use the compose.yaml file
 ################################################################################
